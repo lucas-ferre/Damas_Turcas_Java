@@ -253,13 +253,22 @@ docker compose run --rm damas-turcas
 
 ### Execução no GitHub Codespaces
 
-1. Abra o repositório no GitHub.
-2. Clique no botão **Code** > aba **Codespaces** > **Create codespace on master**.
-3. O ambiente será inicializado automaticamente com Java pré-configurado via [devcontainer.json](file:///.devcontainer/devcontainer.json).
-4. No terminal do Codespace, execute:
-   ```bash
-   make run
-   ```
+1. **Criar ou abrir o Codespace:**
+   - No repositório GitHub, clique em **Code** > aba **Codespaces** > **Create codespace on main**.
+2. **Executar o jogo no terminal do Codespace:**
+   - **Opção A (Via Docker - recomendada e imediata sem instalar nada):**
+     ```bash
+     ./run.sh
+     # ou
+     make run
+     ```
+   - **Opção B (Via Java nativo no terminal):**
+     ```bash
+     make install-java
+     make run
+     ```
+3. **Reconstrução do Contêiner (opcional):**
+   - Caso o Codespace já tenha sido criado anteriormente, pressione `Ctrl + Shift + P` (ou `F1`), selecione **Codespaces: Rebuild Container** para carregar o [devcontainer.json](file:///.devcontainer/devcontainer.json) com o JDK 21 LTS pré-instalado.
 
 ---
 
