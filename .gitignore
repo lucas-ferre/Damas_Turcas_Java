@@ -1,0 +1,122 @@
+# Java e Compilação
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.exe
+*.dll
+*.so
+*.dylib
+bin/
+build/
+target/
+out/
+dist/
+
+# Maven e Gradle
+.gradle/
+build/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs, Dumps e Diagnósticos da JVM
+*.log
+*.tmp
+*.temp
+hs_err_pid*
+replay_pid*
+core.*
+*.stackdump
+*.dump
+
+# Ambientes de Desenvolvimento e IDEs
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+.history/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Editores de Texto e Arquivos de Swap
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+.#*
+*#
+
+# Sistemas Operacionais
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+.fuse_hidden*
+
+# Variáveis de Ambiente e Arquivos Temporários
+.env
+.env.*
+*.local
+*.secret
+*.pem
+*.key
+sources.txt
+scratch/
+temp/

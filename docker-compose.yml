@@ -1,0 +1,6 @@
+services:
+  damas-turcas:
+    build: .
+    image: damas-turcas:latest
+    stdin_open: true
+    tty: true

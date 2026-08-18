@@ -1,0 +1,21 @@
+{
+  "name": "Damas Turcas Java - Codespaces",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-java-test"
+      ]
+    }
+  },
+  "postCreateCommand": "make test || true"
+}
