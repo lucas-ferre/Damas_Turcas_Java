@@ -126,8 +126,17 @@ public final class Main {
     }
 
     private static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        try {
+            String os = System.getProperty("os.name");
+            if (os != null && os.toLowerCase().contains("windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.print("\033[H\033[2J\033[3J\033c");
+            System.out.flush();
+        }
     }
 
     private static void printBanner() {
