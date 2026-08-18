@@ -267,8 +267,6 @@ docker compose run --rm damas-turcas
      make install-java
      make run
      ```
-3. **Reconstrução do Contêiner (opcional):**
-   - Caso o Codespace já tenha sido criado anteriormente, pressione `Ctrl + Shift + P` (ou `F1`), selecione **Codespaces: Rebuild Container** para carregar o [devcontainer.json](file:///.devcontainer/devcontainer.json) com o JDK 21 LTS pré-instalado.
 
 ---
 
