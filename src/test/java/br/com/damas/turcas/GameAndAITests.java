@@ -8,7 +8,6 @@ import br.com.damas.turcas.ai.astar.AStarSolver;
 import br.com.damas.turcas.ai.astar.SearchStats;
 import br.com.damas.turcas.ai.hillclimbing.ClimbStats;
 import br.com.damas.turcas.ai.hillclimbing.HillClimber;
-import br.com.damas.turcas.ai.hybrid.HybridBot;
 import br.com.damas.turcas.ai.mdp.MDPSolver;
 import br.com.damas.turcas.ai.mdp.MDPStats;
 import br.com.damas.turcas.game.Board;

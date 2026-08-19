@@ -90,6 +90,7 @@ public final class Main {
                         String moveFormatted = parser.formatMove(move);
                         history.add("Jogador: " + moveFormatted);
                         board.applyMove(move);
+                        statusMessage = "Você jogou: " + moveFormatted;
                     } catch (IllegalArgumentException e) {
                         statusMessage = "Erro: " + e.getMessage();
                     }
@@ -98,8 +99,8 @@ public final class Main {
                     String sym = aiColor == PieceColor.WHITE ? "Brancas ●" : "Pretas ○";
                     String col = aiColor == PieceColor.WHITE ? Colors.FG_BRIGHT_CYAN : Colors.FG_BRIGHT_RED;
 
-                    System.out.print(Colors.colorize(col + Colors.BOLD,
-                            "\nIA (" + bot.getName() + " - " + sym + ") pensando... calculando melhor jogada..."));
+                    System.out.println(Colors.colorize(col + Colors.BOLD,
+                            "\n» IA (" + bot.getName() + " - " + sym + ") pensando... calculando melhor jogada..."));
                     try {
                         Thread.sleep(350);
                     } catch (InterruptedException ignored) {
@@ -117,6 +118,7 @@ public final class Main {
                     String moveFormatted = parser.formatMove(aiMove);
                     history.add("IA (" + bot.getName() + "): " + moveFormatted);
                     board.applyMove(aiMove);
+                    statusMessage = "IA (" + bot.getName() + ") jogou: " + moveFormatted;
                 }
             }
 

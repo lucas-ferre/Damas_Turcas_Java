@@ -1,6 +1,5 @@
 package br.com.damas.turcas.game;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

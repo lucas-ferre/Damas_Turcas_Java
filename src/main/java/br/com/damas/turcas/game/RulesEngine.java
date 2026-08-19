@@ -145,11 +145,9 @@ public final class RulesEngine {
                 b.set(jumpOver, Piece.EMPTY);
                 b.set(currentPos, Piece.EMPTY);
 
-                boolean promoted = false;
                 Piece nextPiece = p;
                 if ((p.isWhite() && landPos.getRow() == 0) || (p.isBlack() && landPos.getRow() == size - 1)) {
                     nextPiece = p.promote();
-                    promoted = true;
                 }
                 b.set(landPos, nextPiece);
 

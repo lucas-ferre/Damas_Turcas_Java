@@ -9,10 +9,11 @@ import br.com.damas.turcas.game.Position;
 import java.util.List;
 
 public final class Renderer {
-    private final int size;
+
+    public Renderer() {
+    }
 
     public Renderer(int size) {
-        this.size = size;
     }
 
     public String renderGame(Board b, List<String> history, String aiName, String aiEval, String message) {
@@ -28,6 +29,7 @@ public final class Renderer {
         int hudWidth = hudLines.length > 0 ? Table.visibleLen(hudLines[0]) : 0;
 
         StringBuilder sb = new StringBuilder();
+        sb.append("\n");
         for (int i = 0; i < maxLines; i++) {
             String bLine = i < boardLines.length ? boardLines[i] : " ".repeat(boardWidth);
             String hLine = i < hudLines.length ? hudLines[i] : " ".repeat(hudWidth);
