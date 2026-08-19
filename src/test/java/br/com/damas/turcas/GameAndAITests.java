@@ -46,6 +46,8 @@ public final class GameAndAITests {
         runTest("testHybridBotDecision", GameAndAITests::testHybridBotDecision);
         runTest("testAICapturePriority", GameAndAITests::testAICapturePriority);
         runTest("testDrawAfter46Rounds", GameAndAITests::testDrawAfter46Rounds);
+        runTest("testAIPlaysAsWhiteAndBlack", GameAndAITests::testAIPlaysAsWhiteAndBlack);
+        runTest("testDynamicRendererHUDWithPlayerColor", GameAndAITests::testDynamicRendererHUDWithPlayerColor);
 
         System.out.printf("\nResultado dos Testes: %d Passaram | %d Falharam\n", passed, failed);
         if (failed > 0) {
@@ -300,5 +302,33 @@ public final class GameAndAITests {
         assertEquals(RulesEngine.MAX_HALF_MOVES, b.getHalfMoveClock(), "Relógio deve estar em 92 meios-lances (46 rodadas)");
         assertTrue(rules.isGameOver(b), "Jogo deve empatar após 46 rodadas (92 meios-lances)");
         assertEquals(PieceColor.NONE, rules.getWinner(b), "Vencedor deve ser NONE em caso de empate");
+    }
+
+    public static void testAIPlaysAsWhiteAndBlack() {
+        Board b = new Board(8);
+        b.setTurn(PieceColor.WHITE);
+
+        Bot whiteBot = BotFactory.createBot(BotType.HYBRID, 2);
+        BotResult whiteResult = whiteBot.selectMove(b);
+        assertTrue(whiteResult.getMove() != null, "IA jogando de Brancas deve escolher lance inicial");
+
+        Board bBlack = new Board(8);
+        bBlack.setTurn(PieceColor.BLACK);
+        Bot blackBot = BotFactory.createBot(BotType.MDP, 2);
+        BotResult blackResult = blackBot.selectMove(bBlack);
+        assertTrue(blackResult.getMove() != null, "IA jogando de Pretas deve escolher lance");
+    }
+
+    public static void testDynamicRendererHUDWithPlayerColor() {
+        Board b = new Board(8);
+        br.com.damas.turcas.terminal.Renderer renderer = new br.com.damas.turcas.terminal.Renderer(8);
+
+        String hudWhite = renderer.renderGame(b, List.of(), "Bot", "OK", "", PieceColor.WHITE);
+        assertTrue(hudWhite.contains("Brancas (Você)"), "HUD deve indicar Brancas (Você) quando jogador escolhe Brancas");
+        assertTrue(hudWhite.contains("Pretas (IA)"), "HUD deve indicar Pretas (IA) quando jogador escolhe Brancas");
+
+        String hudBlack = renderer.renderGame(b, List.of(), "Bot", "OK", "", PieceColor.BLACK);
+        assertTrue(hudBlack.contains("Brancas (IA)"), "HUD deve indicar Brancas (IA) quando jogador escolhe Pretas");
+        assertTrue(hudBlack.contains("Pretas (Você)"), "HUD deve indicar Pretas (Você) quando jogador escolhe Pretas");
     }
 }

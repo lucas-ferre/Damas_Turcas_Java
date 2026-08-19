@@ -28,6 +28,7 @@ public final class Main {
             printBanner();
 
             int size = selectBoardSize(scanner);
+            PieceColor playerColor = selectPlayerColor(scanner);
             BotSelection botSelection = selectBotAndDifficulty(scanner);
 
             Bot bot = BotFactory.createBot(botSelection.botType, botSelection.difficulty);
@@ -40,25 +41,28 @@ public final class Main {
             String lastAiEval = "";
             String statusMessage = "Jogo iniciado! Boa sorte.";
 
+            clearScreen();
             while (true) {
-                clearScreen();
-                System.out.print(renderer.renderGame(board, history, bot.getName(), lastAiEval, statusMessage));
+                System.out.print(renderer.renderGame(board, history, bot.getName(), lastAiEval, statusMessage, playerColor));
                 statusMessage = "";
 
                 if (rules.isGameOver(board)) {
-                    printGameOver(rules.getWinner(board));
+                    printGameOver(rules.getWinner(board), playerColor);
                     break;
                 }
 
-                if (board.getTurn() == PieceColor.WHITE) {
-                    List<Move> legalMoves = rules.getLegalMoves(board, PieceColor.WHITE);
+                if (board.getTurn() == playerColor) {
+                    List<Move> legalMoves = rules.getLegalMoves(board, playerColor);
                     if (legalMoves.isEmpty()) {
                         statusMessage = "Você não possui movimentos legais.";
                         continue;
                     }
 
-                    System.out.print(Colors.colorize(Colors.FG_BRIGHT_CYAN + Colors.BOLD,
-                            "\nSua vez (Brancas)! Digite sua jogada (ex: E3 para E4 ou C3 D3) [ou '?', 'cls', 'sair']: "));
+                    String sym = playerColor == PieceColor.WHITE ? "Brancas ●" : "Pretas ○";
+                    String col = playerColor == PieceColor.WHITE ? Colors.FG_BRIGHT_CYAN : Colors.FG_BRIGHT_RED;
+
+                    System.out.print(Colors.colorize(col + Colors.BOLD,
+                            "\nSua vez (" + sym + ")! Digite sua jogada (ex: E3 para E4 ou C3 D3) [ou '?', 'cls', 'sair']: "));
                     String input = scanner.nextLine();
                     if (input == null) {
                         break;
@@ -90,8 +94,12 @@ public final class Main {
                         statusMessage = "Erro: " + e.getMessage();
                     }
                 } else {
-                    System.out.print(Colors.colorize(Colors.FG_BRIGHT_RED + Colors.BOLD,
-                            "\nIA pensando... calculando melhor jogada..."));
+                    PieceColor aiColor = playerColor.opponent();
+                    String sym = aiColor == PieceColor.WHITE ? "Brancas ●" : "Pretas ○";
+                    String col = aiColor == PieceColor.WHITE ? Colors.FG_BRIGHT_CYAN : Colors.FG_BRIGHT_RED;
+
+                    System.out.print(Colors.colorize(col + Colors.BOLD,
+                            "\nIA (" + bot.getName() + " - " + sym + ") pensando... calculando melhor jogada..."));
                     try {
                         Thread.sleep(350);
                     } catch (InterruptedException ignored) {
@@ -171,6 +179,28 @@ public final class Main {
         }
     }
 
+    private static PieceColor selectPlayerColor(Scanner scanner) {
+        Table menu = new Table();
+        menu.setBorderStyle(BorderStyle.UNICODE);
+        menu.setTitle(" ESCOLHA SUA COR ");
+        menu.setHeaders("OPÇÃO", "COR", "CARACTERÍSTICA");
+        menu.addRow("1", "Brancas (●)", "Você joga primeiro [Padrão / Recomendado]");
+        menu.addRow("2", "Pretas (○)", "A IA joga primeiro (com as peças Brancas)");
+        System.out.println(menu.render());
+
+        while (true) {
+            System.out.print("Escolha a cor das suas peças [1-2, padrão: 1]: ");
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty() || input.equals("1")) {
+                return PieceColor.WHITE;
+            }
+            if (input.equals("2")) {
+                return PieceColor.BLACK;
+            }
+            System.out.println("Opção inválida. Tente novamente.");
+        }
+    }
+
     private static BotSelection selectBotAndDifficulty(Scanner scanner) {
         Table menuAI = new Table();
         menuAI.setBorderStyle(BorderStyle.UNICODE);
@@ -236,14 +266,14 @@ public final class Main {
         return new BotSelection(chosenAI, difficulty);
     }
 
-    private static void printGameOver(PieceColor winner) {
+    private static void printGameOver(PieceColor winner, PieceColor playerColor) {
         Table banner = new Table();
         banner.setBorderStyle(BorderStyle.UNICODE_DOUBLE);
         banner.setTitle(" FIM DE JOGO ");
 
-        if (winner == PieceColor.WHITE) {
+        if (winner == playerColor) {
             banner.addRow(Colors.colorize(Colors.FG_BRIGHT_GREEN + Colors.BOLD, "  PARABÉNS! VOCÊ VENCEU A PARTIDA!  "));
-        } else if (winner == PieceColor.BLACK) {
+        } else if (winner == playerColor.opponent()) {
             banner.addRow(Colors.colorize(Colors.FG_BRIGHT_RED + Colors.BOLD, "  VITÓRIA DA INTELIGÊNCIA ARTIFICIAL!  "));
         } else {
             banner.addRow(Colors.colorize(Colors.FG_BRIGHT_YELLOW + Colors.BOLD, "  PARTIDA EMPATADA!  "));

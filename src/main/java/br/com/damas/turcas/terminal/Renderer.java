@@ -16,8 +16,12 @@ public final class Renderer {
     }
 
     public String renderGame(Board b, List<String> history, String aiName, String aiEval, String message) {
+        return renderGame(b, history, aiName, aiEval, message, PieceColor.WHITE);
+    }
+
+    public String renderGame(Board b, List<String> history, String aiName, String aiEval, String message, PieceColor playerColor) {
         String[] boardLines = renderBoardLines(b);
-        String[] hudLines = renderHUDLines(b, history, aiName, aiEval);
+        String[] hudLines = renderHUDLines(b, history, aiName, aiEval, playerColor);
 
         int maxLines = Math.max(boardLines.length, hudLines.length);
         int boardWidth = boardLines.length > 0 ? Table.visibleLen(boardLines[0]) : 0;
@@ -105,22 +109,39 @@ public final class Renderer {
         return bg + sym + Colors.RESET;
     }
 
-    private String[] renderHUDLines(Board b, List<String> history, String aiName, String aiEval) {
+    private String[] renderHUDLines(Board b, List<String> history, String aiName, String aiEval, PieceColor playerColor) {
         Table hud = new Table();
         hud.setBorderStyle(BorderStyle.UNICODE);
         hud.setTitle(" PAINEL DE CONTROLE ");
         hud.setHeaders("PROPRIEDADE", "VALOR");
         hud.setAlignments(Alignment.LEFT, Alignment.LEFT);
 
-        String turnStr = b.getTurn() == PieceColor.WHITE
-            ? Colors.colorize(Colors.FG_BRIGHT_CYAN + Colors.BOLD, "Jogador (Brancas ●)")
-            : Colors.colorize(Colors.FG_BRIGHT_RED + Colors.BOLD, "IA " + aiName + " (Pretas ○)");
+        PieceColor safePlayerColor = (playerColor != null && playerColor != PieceColor.NONE) ? playerColor : PieceColor.WHITE;
+        PieceColor aiColor = safePlayerColor.opponent();
+
+        String turnStr;
+        if (b.getTurn() == safePlayerColor) {
+            String sym = safePlayerColor == PieceColor.WHITE ? "Brancas ●" : "Pretas ○";
+            String col = safePlayerColor == PieceColor.WHITE ? Colors.FG_BRIGHT_CYAN : Colors.FG_BRIGHT_RED;
+            turnStr = Colors.colorize(col + Colors.BOLD, "Jogador (" + sym + ")");
+        } else {
+            String sym = aiColor == PieceColor.WHITE ? "Brancas ●" : "Pretas ○";
+            String col = aiColor == PieceColor.WHITE ? Colors.FG_BRIGHT_CYAN : Colors.FG_BRIGHT_RED;
+            turnStr = Colors.colorize(col + Colors.BOLD, "IA " + aiName + " (" + sym + ")");
+        }
 
         hud.addRow("Vez da Jogada", turnStr);
         hud.addRow("Motor de IA", Colors.colorize(Colors.FG_BRIGHT_YELLOW, aiName));
         hud.addRow("Dimensão", b.getSize() + "x" + b.getSize() + " (" + (b.getSize() * 2) + " peças cada)");
-        hud.addRow("Brancas (Você)", "Total: " + b.getWhiteCount() + " | Damas: " + b.getWhiteKingCount());
-        hud.addRow("Pretas (IA)", "Total: " + b.getBlackCount() + " | Damas: " + b.getBlackKingCount());
+
+        if (safePlayerColor == PieceColor.WHITE) {
+            hud.addRow("Brancas (Você)", "Total: " + b.getWhiteCount() + " | Damas: " + b.getWhiteKingCount());
+            hud.addRow("Pretas (IA)", "Total: " + b.getBlackCount() + " | Damas: " + b.getBlackKingCount());
+        } else {
+            hud.addRow("Brancas (IA)", "Total: " + b.getWhiteCount() + " | Damas: " + b.getWhiteKingCount());
+            hud.addRow("Pretas (Você)", "Total: " + b.getBlackCount() + " | Damas: " + b.getBlackKingCount());
+        }
+
         hud.addRow("Total Jogadas", String.valueOf(b.getMoveCount()));
 
         if (aiEval != null && !aiEval.isEmpty()) {

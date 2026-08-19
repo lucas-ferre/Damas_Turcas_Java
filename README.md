@@ -3,11 +3,11 @@
 [![Java Version](https://img.shields.io/badge/Java-21%2B%20%2F%2025%20LTS-ED8B00?style=flat&logo=openjdk)](https://openjdk.org)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=flat&logo=docker)](https://www.docker.com)
 [![GitHub Codespaces](https://img.shields.io/badge/Codespaces-Ready-blue?style=flat&logo=github)](https://github.com/features/codespaces)
-[![Tests](https://img.shields.io/badge/Tests-14%2F14%20Passed-brightgreen)](src/test/java/br/com/damas/turcas/GameAndAITests.java)
+[![Tests](https://img.shields.io/badge/Tests-16%2F16%20Passed-brightgreen)](src/test/java/br/com/damas/turcas/GameAndAITests.java)
 
 Sistema completo para jogo de **Damas Turcas (*Turkish Draughts / Dama*)** implementado em **Java puro (JDK 21+)**, projetado para execução interativa no terminal com interface rica em tabelas Unicode e suporte a múltiplos motores de **Inteligência Artificial** desenvolvidos do zero (**Processo de Decisão de Markov**, **Busca A\*** e **Hill Climbing com Reinicialização Aleatória**).
 
-O projeto conta com arquitetura modular, **zero dependências externas**, conformidade estrita com as **Regras Oficiais de Damas Turcas** (movimentação ortogonal para frente e para os lados), matriz espacial configurável (**8x8** e **10x10**), histórico no HUD configurado para as **3 últimas jogadas**, comandos interativos de ajuda (`?`) e limpeza de tela (`cls`), e suporte nativo a contêineres **Docker** e **GitHub Codespaces**.
+O projeto conta com arquitetura modular, **zero dependências externas**, conformidade estrita com as **Regras Oficiais de Damas Turcas** (movimentação ortogonal para frente e para os lados), seleção de cor de peças (**Brancas** ou **Pretas**), matriz espacial configurável (**8x8** e **10x10**), histórico no HUD configurado para as **3 últimas jogadas**, comandos interativos de ajuda (`?`) e limpeza de tela (`cls`), e suporte nativo a contêineres **Docker** e **GitHub Codespaces**.
 
 ---
 
@@ -272,7 +272,7 @@ docker compose run --rm damas-turcas
 
 ## Suíte de Testes Automatizados
 
-O projeto inclui 14 testes unitários e de integração cobrindo todas as camadas:
+O projeto inclui 16 testes unitários e de integração cobrindo todas as camadas:
 
 ```bash
 # Executar todos os testes
@@ -299,3 +299,5 @@ java -cp bin br.com.damas.turcas.GameAndAITests
 | `testHybridBotDecision` | `br.com.damas.turcas.ai.hybrid` | Integração e consenso entre os motores de IA | ✅ Aprovado |
 | `testAICapturePriority` | `br.com.damas.turcas.ai` | Cumprimento da Lei da Maioria pelos bots de IA | ✅ Aprovado |
 | `testDrawAfter46Rounds` | `br.com.damas.turcas.game` | Empate automático após 46 rodadas (92 meios-lances) sem captura | ✅ Aprovado |
+| `testAIPlaysAsWhiteAndBlack` | `br.com.damas.turcas.ai` | Capacidade da IA de planejar e jogar tanto de Brancas quanto de Pretas | ✅ Aprovado |
+| `testDynamicRendererHUDWithPlayerColor` | `br.com.damas.turcas.terminal` | Renderização dinâmica do HUD adaptada à cor escolhida pelo jogador | ✅ Aprovado |

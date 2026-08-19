@@ -36,8 +36,10 @@ Este documento descreve detalhadamente as **regras oficiais do jogo de Damas Tur
 O jogo segue rigorosamente a tradição milenar das **Damas Turcas (*Dama*)**:
 
 1. Todas as casas do tabuleiro são **ativas e jogáveis** (não se joga apenas nas casas escuras).
-2. O jogador com as peças **Brancas** (`●` / `★`) sempre realiza o primeiro movimento da partida.
-3. As peças **Pretas** (`○` / `☆`) são controladas pelo motor de Inteligência Artificial.
+2. As peças **Brancas** (`●` / `★`) sempre realizam o primeiro movimento da partida.
+3. O jogador tem a liberdade de **escolher sua cor** (Brancas ou Pretas):
+   - Ao escolher **Brancas**: o jogador joga primeiro.
+   - Ao escolher **Pretas**: a IA joga primeiro com as Brancas.
 
 ---
 
@@ -196,6 +198,21 @@ O parser inteligente ([`NotationParser.java`](file:///src/main/java/br/com/damas
 ---
 
 ## 4. Configurações de Jogo e Motores de IA
+
+### Seleção da Cor das Peças
+
+```
+┌────────────────────────────────────────────────────────┐
+│                    ESCOLHA SUA COR                     │
+├───────┬──────────────┬─────────────────────────────────┤
+│ OPÇÃO │ COR          │ CARACTERÍSTICA                  │
+├───────┼──────────────┼─────────────────────────────────┤
+│ 1     │ Brancas (●)  │ Você joga primeiro [Padrão]     │
+│ 2     │ Pretas (○)   │ A IA joga primeiro (com Brancas)│
+└───────┴──────────────┴─────────────────────────────────┘
+```
+
+---
 
 ### Seleção dos Motores de Inteligência Artificial
 
